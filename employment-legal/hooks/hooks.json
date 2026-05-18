@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${PLUGIN_ROOT}/scripts/hook-announce.sh start"
+            "command": "$HOME/.agents/plugins/employment-legal/scripts/hook-announce.sh start"
           }
         ]
       }
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${PLUGIN_ROOT}/scripts/hook-announce.sh prompt"
+            "command": "$HOME/.agents/plugins/employment-legal/scripts/hook-announce.sh prompt"
           }
         ]
       }
@@ -25,7 +25,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${PLUGIN_ROOT}/scripts/hook-announce.sh pre-tool"
+            "command": "$HOME/.agents/plugins/employment-legal/scripts/hook-announce.sh pre-tool"
           }
         ]
       }
@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${PLUGIN_ROOT}/scripts/hook-announce.sh post-tool"
+            "command": "$HOME/.agents/plugins/employment-legal/scripts/hook-announce.sh post-tool"
           }
         ]
       }
