@@ -2,10 +2,11 @@
 name: cold-start-interview
 description: >
   Cold-start setup — learns your jurisdictional footprint and escalation rules
-  from your handbook and termination memos. Asks which states and countries
-  have employees, reads seed documents, and builds a jurisdiction-aware
-  escalation table. Use on fresh install, when CLAUDE.md still has
-  [PLACEHOLDER] markers, or when re-running with --redo or --check-integrations.
+  from your employment contracts and dismissal records. Asks which UK
+  jurisdictions and countries have employees, reads seed documents, and builds
+  a jurisdiction-aware escalation table. Use on fresh install, when CLAUDE.md
+  still has [PLACEHOLDER] markers, or when re-running with --redo or
+  --check-integrations.
 argument-hint: "[--redo | --check-integrations]"
 ---
 
@@ -24,7 +25,7 @@ argument-hint: "[--redo | --check-integrations]"
 
 ## Purpose
 
-Employment law is jurisdictional down to the bone. The right answer in Texas is the wrong answer in California. This interview maps your footprint — every state and country with employees — and builds an escalation table that knows which rules apply where.
+Employment law in the UK is largely uniform across Great Britain, but Northern Ireland has parallel legislation, collective agreements create local variation, and international employees bring entirely different frameworks. This interview maps your footprint — every UK nation and country with employees — and builds an escalation table that knows which rules apply where.
 
 ## Cold-start check
 
@@ -79,7 +80,7 @@ Then the fresh-profile note:
 
 Then: "Ready? A few quick questions first, then we'll go deeper."
 
-**Why this matters** (offer if the user pushes back on the time cost). Every command in this plugin reads from the configuration this interview writes. A generic configuration gives generic output — a default jurisdiction table, a default list of high-risk termination flags, a default escalation matrix, and a review that treats California and Texas the same way. Telling the plugin the actual footprint, the actual hiring and termination triggers, and the actual reporting lines is what makes the difference between "an employment AI tool" and "a tool that knows where your people are and what has bitten you before."
+**Why this matters** (offer if the user pushes back on the time cost). Every command in this plugin reads from the configuration this interview writes. A generic configuration gives generic output — a default jurisdiction table, a default list of high-risk dismissal flags, a default escalation matrix, and a review that doesn't know your redundancy history or your recognised union. Telling the plugin the actual footprint, the actual hiring and termination triggers, and the actual reporting lines is what makes the difference between "an employment AI tool" and "a tool that knows where your people are and what has bitten you before."
 
 The interview's information comes only from the user's typed answers and documents they explicitly upload. Do not read `~/CLAUDE.md`, personal notes, or any ambient context to fill in practice details. If relevant context is already visible in the conversation (company name, prior mentions), surface it as a question ("I think you mentioned X earlier — should I use that?") before using it.
 
@@ -187,10 +188,12 @@ Write `## Who's using this`, `## Available integrations`, and `## Outputs` secti
 
 If not:
 
-- Every US state with at least one employee. All of them.
-- Every country outside the US.
-- Remote-first or office-based? (Remote-first means the footprint keeps expanding without anyone telling you.)
-- Which state has the most employees? That's your default jurisdiction when the question doesn't specify.
+- **England and Wales** — this is the default and covers most UK employment law.
+- **Scotland** — employment law is largely the same as E&W; note any collective agreements with Scottish recognised unions.
+- **Northern Ireland** — parallel legislation applies (Employment Rights (Northern Ireland) Order 1996 etc.); flag explicitly.
+- **Countries outside the UK** — list each. Employment law varies materially; a UK policy does not cover, e.g., Irish, German, or French employees.
+- Remote-first or office-based? (Remote-first means the footprint keeps expanding without anyone noticing.)
+- Which jurisdiction has the most employees? That's the default when the question doesn't specify.
 
 **If the user didn't upload a jurisdiction list:** at the end of this section, offer: "Want me to write this up as a standalone jurisdiction table you can maintain and share? Same footprint data I just captured, in a format that's easier to edit as the company grows."
 
@@ -205,19 +208,21 @@ If not:
 If not:
 
 **Hiring:** When does legal see an offer?
-- Every offer? Only exec? Only with restrictive covenants? Never?
-- What's in the standard offer letter? Restrictive covenants vary by state — non-competes are unenforceable in California, fine in Florida.
+- Every offer? Only exec? Only with post-termination restrictions? Never?
+- What's in the standard offer letter? Do you use a fixed-term template that includes the ERA 1996 s.1 written statement of particulars, or is it a short-form letter with a separate contract?
+- Right to Work check process — do you handle this in HR, or does legal sign off?
 
-**Termination:** When does legal see a termination?
-- Every term? Performance only? RIFs only?
-- What's the standard severance — formula, discretionary, none?
-- Release required? Always, or only above X severance?
+**Termination / dismissal:** When does legal see a dismissal?
+- Every dismissal? Performance/capability only? Redundancies only? Above a service-length threshold?
+- What's the standard enhanced severance — formula, discretionary, or statutory minimum only?
+- Settlement Agreement required for enhanced payments? Always, or only above a threshold?
 
-**The high-risk flags:** What makes a termination scary? (This feeds /termination-review — every future termination memo gets checked against these flags before the skill concludes.)
-- Recent complaint (harassment, discrimination, whistleblower)
-- Recently returned from protected leave
-- Protected class + thin documentation
-- Anything else that's bitten you before?
+**The high-risk flags:** What makes a dismissal risky? (This feeds /termination-review — every future dismissal memo gets checked against these flags.)
+- Recent protected disclosure / whistleblowing complaint
+- Pregnancy, maternity, or recent return from statutory leave
+- Protected characteristic (EqA 2010) + thin documentation or suspicious timing
+- Trade union activity or collective action
+- Anything else that has generated an ET claim or near-miss before?
 
 **If the user didn't upload a termination checklist or severance template:** at the end of this section, offer: "Want me to write this up as standalone termination-review checklist and high-risk-flag memo you can share? Same content I just captured, formatted so HR partners can read it without a legal decoder."
 
@@ -255,11 +260,12 @@ This is the core output. For each state/country in the footprint:
 
 | Jurisdiction | Special rules | Auto-escalate |
 |---|---|---|
-| California | No non-competes. Final pay due last day (or 72hrs if employee quits w/o notice). Meal/rest break penalties. PAGA exposure. | Any termination. Any restrictive covenant. |
-| New York | Pay transparency in postings. NYC has separate rules. Final pay next regular payday. | Exec hires (pay transparency). |
-| [etc.] | | |
+| England & Wales | ERA 1996, EqA 2010, WTR 1998. Post-termination restrictions: *Cavendish* reasonableness test. ACAS Code governs disciplinary/capability process. | Any dismissal with automatic UD flags. Any post-termination restriction. |
+| Scotland | Same statutory framework as E&W. Some procedural differences in ET practice. | Same as E&W. Flag Scottish ET procedural questions. |
+| Northern Ireland | Parallel legislation: Employment Rights (NI) Order 1996, EqA (NI). Largely mirrors GB but not identical — NI-specific advice required. | Any NI dismissal or discrimination question. |
+| [Country] | [Key rules and mandatory minima] | [When to escalate to local counsel] |
 
-Don't invent rules for jurisdictions they didn't name. If they have one employee in Montana and no memo ever mentioned Montana, note `[Montana: 1 employee, no history — research on first issue]`.
+Don't invent rules for jurisdictions they didn't name. If they have one employee in, say, Germany and no history yet, note `[Germany: 1 employee, no history — research on first issue; local employment counsel required]`.
 
 ## Writing the practice profile
 
@@ -287,13 +293,13 @@ If yes, show this tailored list (not a generic template — these are the concre
 This solves the cold-start problem (the supervisor doesn't know what to do first) and the value-prop problem (they don't know what the plugin can do) in one offer. Make the list specific. Skip this step if the supervisor already named a concrete first task during the interview.
 
 
-- "Here's your jurisdiction table. The California row is the one to double-check."
+- "Here's your jurisdiction table. The Northern Ireland row is the one to double-check if you have NI employees."
 - "What's the next termination? Let me take a look."
 - Flag handbook gaps: "Your handbook doesn't have a remote work policy and you're remote-first. Want one?"
 - Check HRIS field: "You said your HRIS is [system] — want me to run the leave tracker now to see if anything is open?"
 - If manual leave tracking: "You don't have an HRIS leave module — I'll track leaves in a register file. Use /employment-legal:log-leave to add any leaves that are currently open."
 
-**Before your first review**: connect a research tool. Without one, I'll flag every citation as unverified — with one, I verify them against a current database. In Cowork: Settings → Connectors. In Claude Code: authorize when a skill prompts you.
+**Before your first review**: the uk-legal MCP and BAILII connectors in your `.mcp.json` give this plugin live access to UK legislation, case law, and HMRC guidance. Without them, I'll flag every citation as `[model knowledge — verify]`. If they're not connected, check your MCP config or run `/employment-legal:cold-start-interview --check-integrations`.
 
 <!-- COLLATERAL LINKS: when onboarding collateral exists, add here:
      "Want a walkthrough? [Watch the 3-minute intro](URL) or [read the getting-started guide](URL)." -->

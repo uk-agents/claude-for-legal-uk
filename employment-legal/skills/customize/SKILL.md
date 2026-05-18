@@ -44,11 +44,11 @@ interview and without hand-editing YAML.
      leave accommodation
    - **People** — HR partners, people team lead, outside counsel, escalation
      chain, investigation sponsor
-   - **Hiring review** — offer letter template, restrictive covenants
-     posture, background check vendor, standard at-will language
-   - **Termination review** — severance framework, release language, final
-     pay timing rules per state, high-risk flags
-   - **Handbook** — handbook file path, state supplements approach, review
+   - **Hiring review** — offer letter template, post-termination restrictions
+     posture, DBS check policy, Right to Work check process
+   - **Termination/dismissal review** — enhanced severance framework, Settlement
+     Agreement language, final pay and accrued holiday practice, high-risk flags
+   - **Handbook** — handbook file path, jurisdiction supplements approach, review
      cadence
    - **Investigation preferences** — privileged labeling, interview protocol,
      audience-specific summary templates

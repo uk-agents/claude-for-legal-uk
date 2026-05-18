@@ -1,10 +1,11 @@
 ---
 name: leave-tracker
 description: >
-  Check open leaves for deadline alerts and required decisions. Surfaces only
-  the leaves that require an action and explains why — not a status board.
-  Use weekly, or whenever the attorney needs to know which leaves have
-  upcoming designation, certification, or exhaustion deadlines.
+  Check open statutory leaves for deadline alerts and required decisions.
+  Surfaces only the leaves that require an action and explains why — not a
+  status board. Use weekly, or whenever the legal or HR team needs to know
+  which leaves have upcoming notification response, return-date change, or
+  reasonable-adjustments deadlines.
 argument-hint: "[no arguments — works from HRIS or leave-register.yaml]"
 ---
 

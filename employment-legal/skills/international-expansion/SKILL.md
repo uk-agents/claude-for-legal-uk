@@ -139,7 +139,7 @@ Questions legal should ask:
 - How are our equity awards (RSUs/options) taxed in [country]? Do we need
   local tax counsel to advise employees at grant and vesting?
 - If we set up an entity, what intercompany services agreement is needed
-  between the subsidiary and the US parent?
+  between the subsidiary and the UK parent entity?
 
 **Finance / Payroll** (required before first paycheck)
 
@@ -228,7 +228,7 @@ Draft the briefing request below, tailored to the intake answers:
 >    are not unionized?
 >
 > 7. **Data protection** — what obligations apply to employee data? Is there
->    a data transfer mechanism needed for employee data flowing to the US?
+>    a data transfer mechanism needed for employee data flowing to the UK (home jurisdiction)?
 >
 > 8. **Work authorization** — what permits or visas are required for foreign
 >    nationals? What are the processing timelines?
@@ -248,9 +248,9 @@ Draft the briefing request below, tailored to the intake answers:
 > 12. **Day 1 compliance** — what must be in place before the first employee
 >     starts? Registration requirements, notices, filings, posters?
 >
-> 13. **Top 2-3 things that surprise US companies hiring here for the first
+> 13. **Top 2-3 things that surprise UK companies hiring here for the first
 >     time** — what do you wish clients had asked you earlier? What has
->     *changed recently* that a US team might not have caught?
+>     *changed recently* that a UK team might not have caught?
 
 Add this briefing request to the expansion tracker as a single open item:
 owner = Outside Counsel, status = open, with the full briefing agenda in

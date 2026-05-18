@@ -1,6 +1,6 @@
 # Employment Counsel Plugin
 
-In-house employment law workflows: hiring review, termination review, policy drafting, handbook updates, jurisdiction-aware wage & hour Q&A. Built around a jurisdictional footprint learned at cold-start — the plugin knows which states you're in and what's different about each.
+In-house employment law workflows for UK practice: hiring review, termination review, policy drafting, handbook updates, jurisdiction-aware employment law Q&A. Built around a jurisdictional footprint learned at cold-start — the plugin knows which nations you operate in (England & Wales, Scotland, Northern Ireland) and what's different about each.
 
 **Every output is a draft for attorney review — cited, flagged, and gated — not a legal conclusion.** The plugin does the work: reads the documents, applies your playbook, finds the issues, drafts the memo. A lawyer reviews, verifies, and decides. Citations are tagged by source so you know which ones came from a research tool and which ones need checking. Privilege markers are applied conservatively so nothing waives by accident. Consequential actions — filing, sending, executing — are gated behind explicit confirmation.
 
@@ -14,7 +14,7 @@ In-house employment law workflows: hiring review, termination review, policy dra
 
 ## First run: cold-start
 
-Asks which states and countries you have employees in, reads your handbook and three recent termination memos, builds a jurisdiction-aware escalation table.
+Asks which nations and countries you have employees in (E&W/Scotland/NI and international), reads your handbook and three recent termination memos, builds a jurisdiction-aware escalation table.
 
 ```
 /employment-legal:cold-start-interview
@@ -35,7 +35,7 @@ Your configuration is stored at `~/.claude/plugins/config/claude-for-legal/emplo
 | `/employment-legal:cold-start-interview` | Cold-start interview — learns jurisdictional footprint + escalation rules from handbook + term memos |
 | `/employment-legal:hiring-review` | Offer letter + restrictive covenant review, jurisdiction check |
 | `/employment-legal:termination-review` | Termination review with high-risk flag detection |
-| `/employment-legal:policy-drafting [topic]` | Draft a policy with state supplements where needed |
+| `/employment-legal:policy-drafting [topic]` | Draft a policy with jurisdiction supplements where needed (E&W/Scotland/NI) |
 | `/employment-legal:wage-hour-qa [question]` | Wage/hour or general employment Q&A, jurisdiction-aware |
 | `/employment-legal:worker-classification` | Classify a proposed worker engagement and flag misclassification gaps |
 | `/employment-legal:expansion-kickoff [country]` | Kick off international expansion planning for a new country |
@@ -58,7 +58,7 @@ The skills above run when you invoke them — for when you're working a matter. 
 
 | Agent | What it watches | Default cadence |
 |---|---|---|
-| **leave-tracker** | Open leaves with hard legal deadlines — FMLA, state equivalents (CA CFRA, NY PFL), USERRA, ADA leave as accommodation; fires decision-point alerts before deadlines are missed | Weekly (Monday) |
+| **leave-tracker** | Open leaves with hard legal deadlines — SML, SPL, SAL, ShPL, Parental Bereavement Leave, EqA s.20 long-term sickness; fires decision-point alerts before deadlines are missed | Weekly (Monday) |
 
 ## How it learns
 
@@ -66,6 +66,6 @@ Your practice profile at `~/.claude/plugins/config/claude-for-legal/employment-l
 
 ## Notes
 
-- Jurisdiction awareness is the whole point. The plugin knows California final pay is due on the last day and New York's is the next regular payday.
+- Jurisdiction awareness is the whole point. The plugin knows Scotland uses different redundancy pay tables, Northern Ireland has a separate industrial tribunal system, and England & Wales is the default framework.
 - Termination review is NOT a replacement for the conversation with HR and the manager. It's a checklist that catches the thing everyone forgot.
 - Wage/hour Q&A cites the rule but flags close calls for human review. Classification decisions have consequences.

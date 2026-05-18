@@ -147,7 +147,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 
 - [e.g., "LoL cap: client requires 24 months, not house standard 12."]
 - [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
-- [e.g., "Governing law: must be English law, not Delaware."]
+- [e.g., "Governing law: must be English law, not New York law."]
 
 ## Related matters
 

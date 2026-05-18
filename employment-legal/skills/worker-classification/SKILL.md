@@ -1,40 +1,40 @@
 ---
 name: worker-classification
 description: >
-  Classify a proposed worker engagement — employee, IC, temp, or vendor — by
-  running the applicable jurisdiction tests and flagging misclassification gaps
-  between the intended arrangement and what the facts actually support.
+  Classify a proposed worker engagement — employee, worker (limb (b)), or
+  self-employed contractor — by running the applicable UK status tests and
+  flagging gaps between the intended arrangement and what the facts actually
+  support. Includes IR35/off-payroll working assessment for PSC engagements.
   Prospective use only. Use when someone says "we want to bring on a
-  contractor", "is this a vendor or a temp", "how should we classify this
-  person", or describes a proposed working arrangement.
+  contractor", "should this person be employed or self-employed", "how should
+  we classify this person", or describes a proposed working arrangement.
 argument-hint: "[describe the proposed arrangement, or just start and I'll ask]"
 ---
 
 # /worker-classification
 
-Runs the applicable classification tests for the jurisdiction and flags where
-the proposed arrangement doesn't match the structure you're trying to use.
-Prospective only — for existing relationships, consult counsel.
+Runs the applicable UK classification tests for the proposed arrangement and
+flags where the facts don't match the intended structure. Prospective only —
+for existing relationships, consult a solicitor.
 
 ## Instructions
 
 1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, escalation table.
 2. Run the full workflow below.
-3. If the attorney provides details upfront, extract what's available and ask
-   only about the gaps. Do not re-ask information already provided.
+3. If the user provides details upfront, extract what's available and ask only about the gaps.
 
 ## Examples
 
 ```
 /employment-legal:worker-classification
-We want to bring on a data scientist for 6 months, working out of our
-SF office, using our tools, embedded in our analytics team.
+We want to bring on a data engineer for 6 months, working out of our
+London office, using our tools, embedded in our analytics team.
 ```
 
 ```
 /employment-legal:worker-classification
 Is our recruiter contractor arrangement okay? She works exclusively for
-us, sets her own hours, uses her own laptop, project fee per placement.
+us, sets her own hours, uses her own laptop, fee per placement.
 ```
 
 ```
@@ -46,7 +46,7 @@ us, sets her own hours, uses her own laptop, project fee per placement.
 
 ## Matter context
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
 
 ---
 
@@ -54,268 +54,227 @@ us, sets her own hours, uses her own laptop, project fee per placement.
 
 The most expensive classification decision is the one nobody made consciously.
 Someone describes what they want ("a contractor"), the engagement starts, and
-two years later the facts look like employment. This skill walks the applicable
-tests on the proposed arrangement before it starts — and tells you when what
-you're describing doesn't match the structure you're trying to use.
+two years later the facts look like employment or deemed employment for tax.
+This skill walks the applicable UK tests on the proposed arrangement before it
+starts — and tells you when what you're describing doesn't match the structure
+you're trying to use.
 
 This skill teaches the reasoning pattern. It does not state the law. Every
-test formulation, statutory citation, threshold, and carve-out must come from
-current research for the applicable jurisdiction.
+test formulation, statutory citation, and case-law development must come from
+current research.
 
 ## Prospective-only hard gate — run BEFORE intake
 
-**This skill analyzes a PROPOSED engagement before the work starts.** Before any substantive intake (Step 1), ask:
+**This skill analyses a PROPOSED engagement before the work starts.** Before any substantive intake (Step 1), ask:
 
-> Has this work already started? Is the worker currently engaged, or have they been performing work under this arrangement for any period of time (days, weeks, months, or years)?
+> Has this work already started? Is the worker currently engaged, or have they been performing work under this arrangement for any period of time?
 
-If the answer is yes — the engagement already exists, in any form, for any duration — **STOP**. Do not proceed to Step 1 intake. Classifying an existing arrangement is not a planning exercise; it's a liability assessment with remediation implications: back pay (OT, meal/rest premiums), unpaid employer-side payroll tax, benefits eligibility that was denied, unemployment and workers' comp back-exposure, state penalties (in CA, PAGA), IRS § 530 relief analysis, and — in strict-test jurisdictions with ongoing work — the prospective exposure of letting it run another day. That analysis is privileged, led by counsel, and coupled with a remediation plan.
+If the answer is yes — **STOP**. Do not proceed to Step 1 intake. Classifying an existing arrangement is not a planning exercise; it's a liability assessment with remediation implications: back-pay (NMW, holiday, unlawful deduction from wages), employer and employee NICs arrears, HMRC PAYE exposure, Employment Tribunal claims, and HMRC penalties. That analysis is privileged, led by a solicitor, and coupled with a remediation plan.
 
 Output exactly this block and wait for a response:
 
 > **Out of scope — existing arrangement.**
 >
-> This skill is designed to analyze a worker engagement *before it starts*, so the classification choice informs how to structure the contract and operations. You've described an arrangement that already exists. Analyzing an existing engagement retroactively is a different exercise: reclassification risk assessment coupled with remediation planning — back-pay exposure, payroll-tax back-exposure, penalty exposure, benefits exposure, IRS § 530 relief analysis, and prospective restructuring. That work should be privileged, led by an attorney, and likely coupled with outside-counsel review given the dollar and enforcement exposure.
+> This skill is designed to analyse a worker engagement *before it starts*, so the classification choice informs how to structure the contract and operations. You've described an arrangement that already exists. Analysing an existing engagement retroactively is a different exercise: reclassification risk assessment coupled with remediation planning — back-pay exposure (NMW, holiday, unlawful deductions), NICs and PAYE arrears, HMRC penalties, Employment Tribunal claim exposure, and prospective restructuring. That work should be privileged, led by a solicitor, and likely coupled with outside counsel review given the financial and enforcement exposure.
 >
-> Recommended next step: escalate per your config's escalation table (for retroactive classification, this typically routes to GC + outside employment counsel). I've flagged this for escalation routing.
+> Recommended next step: escalate per your config's escalation table (for retroactive classification, this typically routes to GC + outside employment/tax counsel).
 >
 > **If you want to proceed with the prospective-style analysis anyway for planning purposes, say "proceed anyway" — but understand:**
 >
 > - The output is NOT a remediation plan and should not be treated as one.
-> - The output does NOT scope back-pay, penalty, or payroll-tax exposure for the period already worked.
-> - The output does NOT substitute for the reclassification-risk assessment that this fact pattern actually calls for.
-> - The output will carry a prominent banner reflecting this scope mismatch, and the consequential-action gate will require an attorney yes before the analysis is treated as reliable.
->
-> Only say "proceed anyway" if you're using this skill for forward-looking planning (e.g., "if we were structuring this fresh today, how should we think about it?") and you have a separate plan for the remediation question.
+> - The output does NOT scope back-pay, NICs arrears, or HMRC penalty exposure for the period already worked.
+> - The output does NOT substitute for the reclassification risk assessment this fact pattern actually calls for.
+> - The output will carry a prominent banner and the consequential-action gate will require a solicitor yes before the analysis is treated as reliable.
 
-**Only proceed past this gate with an explicit `"proceed anyway"` (or equivalent user instruction). A hesitant "I guess" does not count — re-prompt. If the user proceeds anyway, prepend this banner to every output of this skill for this session:**
+**Only proceed past this gate with an explicit "proceed anyway".** If the user proceeds anyway, prepend this banner to every output for this session:
 
 ```
 ⚠️ SCOPE MISMATCH — OUT-OF-SCOPE USE
-This skill analyzes prospective worker engagements. The arrangement here
+This skill analyses prospective worker engagements. The arrangement here
 already exists. This output is the prospective-style analysis the user
 requested for planning purposes only — it is NOT a remediation plan, does
-NOT scope existing back-pay / penalty / payroll-tax exposure, and does
-NOT substitute for the reclassification-risk assessment this fact pattern
-requires. The remediation question has been flagged for escalation to
-counsel per your config's escalation table.
+NOT scope existing back-pay / NICs / PAYE / HMRC penalty exposure, and does
+NOT substitute for the reclassification risk assessment this fact pattern
+requires. Escalate to counsel.
 ```
 
-If the answer to "has this work already started?" is no (the engagement is genuinely prospective, not yet begun), proceed to load context.
+If the answer to "has this work already started?" is no (genuinely prospective), proceed.
 
 ---
 
 ## Load context
 
-Read `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, any classification history or
-prior settlements noted, escalation table, and any house classification
-policy the team has recorded.
+Read `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, any prior HMRC disputes or ET claims noted, escalation table, and any house classification policy recorded.
 
 ## Output header
 
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → `## Outputs` (it differs by user role — see `## Who's using this`).
+Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → `## Outputs`.
 
 ## Workflow
 
 ### Step 1 — Information gathering
 
-Ask all of the following in a single block. Do not drip questions one at a
-time. Briefly explain why you're asking — attorneys answer better when they
-understand what the question is testing.
+Ask all of the following in a single block. Briefly explain why — users answer better when they understand what the question is testing.
 
-> To run the right classification tests I need to understand the proposed
-> arrangement in detail. Please answer as many of these as you can — the more
-> complete the picture, the more accurate the analysis:
+> To run the right classification tests I need to understand the proposed arrangement in detail. Please answer as many of these as you can:
 >
 > **The work**
 > - What will this person actually do day-to-day?
-> - Is this work part of your company's core business, or peripheral to it?
->   (e.g., a software engineer at a software company = core; an IT
->   contractor at a law firm = more peripheral)
+> - Is this work part of your company's core business, or peripheral to it? (A software engineer at a tech company = core; an IT contractor at a law firm = more peripheral. This is relevant to the integration test.)
 > - Is this a defined project with a clear end, or ongoing indefinite work?
-> - How specialized is the skill? Does this person have expertise your team
->   doesn't?
+> - How specialised is the skill? Does this person have expertise your team doesn't?
 >
 > **Control**
 > - Who sets their hours and schedule — them or you?
 > - Where will they work — your office, their location, or either?
-> - Will you direct how they do the work (methods, process, sequence), or
->   just what the end result should be?
+> - Will you direct how they do the work (methods, process, sequence), or just what the end result should be?
 > - Will they supervise any of your employees?
 >
-> **Economics**
+> **Personal service and substitution**
+> - Must this specific person do the work personally, or can they send a substitute?
+> - If a substitute is permitted: is the substitute subject to your approval? Who pays the substitute?
+> - An unfettered right to substitute weighs strongly against worker and employee status — this factor is important.
+>
+> **Economics and mutuality**
 > - How will they be paid — hourly, daily, or fixed project fee?
 > - Will you provide equipment, tools, or software, or do they use their own?
-> - Do they work for other companies, or will this be exclusive?
-> - Will they bear any financial risk — can they profit beyond the fee, or
->   lose money on the engagement?
-> - Do they have their own business entity (LLC, S-corp, sole proprietor)?
+> - Do they work for other clients, or will this be exclusive?
+> - Will they bear financial risk — can they profit beyond the fee, or lose money on the engagement?
+> - When there is no work available, are you obliged to offer work? Are they obliged to accept it?
+> - (Mutuality of obligation — the obligation to offer work and the obligation to accept it — is one of the three core elements of employee status in UK law.)
 >
-> **The arrangement**
-> - How do you want to structure this — direct contractor, staffing agency
->   temp, or vendor/SOW (company-to-company)?
-> - If staffing agency: who pays the worker — the agency or you? Who controls
->   day-to-day work?
-> - Will there be a written contract? Do you have a template in mind?
-> - Roughly how long is the engagement — weeks, months, over a year?
+> **Structure**
+> - Are they engaging as an individual, or via a limited company or personal service company (PSC)?
+> - If via a PSC: are you a public-sector body, or a medium/large private-sector business (more than 50 employees or more than £10.2m turnover)? (This triggers the off-payroll working rules.)
+> - Will there be a written contract?
+> - How long is the engagement expected to run?
 > - Will they work alongside your employees doing similar work?
 >
-> **Purpose(s) of the classification**
-> - What legal purposes does the classification need to serve — federal
->   payroll tax, FLSA wage/hour, state wage/hour, unemployment insurance,
->   workers' compensation, benefits eligibility? Different purposes are often
->   governed by different tests, and the answers can diverge.
+> **Purpose of the classification**
+> - Which protections or obligations are you thinking about? Employment rights (unfair dismissal, holiday, NMW, WTR), tax/NICs (PAYE vs self-assessment), IR35/off-payroll working, or all three? Different tests apply to each purpose and the answers can diverge.
 >
 > **Jurisdiction**
-> - Where will this person physically perform the work?
+> - Where will this person physically perform the work? (E&W / Scotland / NI / mixed)
 
-Wait for responses before proceeding. If the attorney can't answer certain
-questions, note the gaps — they affect the analysis.
+Wait for responses. Note any gaps — they affect the analysis.
 
 ### Step 2 — Identify the applicable tests
 
-> **Research the applicable tests before proceeding.** For the jurisdiction(s)
-> and purpose(s) identified in intake, research the currently operative
-> classification test(s). Jurisdictions commonly use one or more of: an ABC
-> test, an economic-realities test, a common-law right-to-control test, a
-> hybrid, or a purpose-specific statutory test. The test that governs for
-> federal payroll tax may not be the same test that governs for state
-> wage/hour, unemployment, or workers' compensation — run each purpose on its
-> own track. Cite the controlling statute, regulation, or case. Note the
-> effective date of each rule and whether it has been recently amended.
-> Identify any carve-outs or exceptions that may apply (e.g., B2B,
-> professional services, construction, referral-agency, business-to-business
-> contracting relationship). Verify currency. If you are uncertain about the
-> current state of the law in any jurisdiction, flag it for attorney
-> verification — do not state a test you haven't confirmed.
-
-If `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` records the company's house classification policy, apply it
-first and flag any tension with the researched test.
-
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a jurisdiction-and-purpose combination, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / purpose / test]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **Research the applicable tests before proceeding.** For the purpose(s) identified in intake, research the currently operative UK classification tests. The three purposes use different (though overlapping) tests:
 >
-> **Source attribution.** Tag every citation — each classification test, statute, regulation, or case — with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the attorney supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Purpose 1 — Employment rights** (ERA 1996, EqA 2010, WTR 1998, NMW Act 1998):
+> The *Ready Mixed Concrete (SE & E) Ltd v Ministry of Pensions and National Insurance* [1968] 2 QB 497 three-element test for employee status: (1) personal service by the worker, (2) a wage or other remuneration, (3) a sufficient degree of control. Additional factors from the multi-factor approach developed in subsequent case law. The *Autoclenz Ltd v Belcher* [2011] UKSC 41 principle that written terms are not determinative if they do not reflect the reality of the working arrangement.
+>
+> For **worker (limb (b))** status: ERA 1996 s.230(3)(b) — an individual who contracts personally to perform work or services for another party who is not their client or customer. The personal service requirement applies but mutuality and control requirements are lower than for employee status. *Uber BV v Aslam* [2021] UKSC 5 and *Pimlico Plumbers Ltd v Smith* [2018] UKSC 29 are the leading Supreme Court cases. Cite and verify currency.
+>
+> **Purpose 2 — Income tax and NICs** (PAYE/self-assessment):
+> HMRC applies common-law employment status factors drawn from ITEPA 2003 and the general law: control, substitution, mutuality, financial risk, equipment, integration, and the overall picture. Research the current HMRC Employment Status Manual (ESM) guidance, particularly ESM0500 onwards on the tests. Note that HMRC's approach and the general law tests are closely aligned but the employment rights tests and the tax tests are applied by different bodies (Employment Tribunal vs HMRC/First-tier Tribunal) and can diverge in borderline cases.
+>
+> **Purpose 3 — IR35 / off-payroll working** (where engagement is via PSC):
+> If the worker is engaging via a PSC and the client is a public-sector body or a medium/large private-sector business, ITEPA 2003 Chapter 10 (off-payroll working rules, as reformed April 2021) applies. The test is whether, if the worker had contracted directly with the client, that contract would constitute employment. The client (not the PSC) is responsible for making the status determination and issuing a Status Determination Notice (SDN). Research the current Chapter 10 test and SDN requirements. For small private-sector clients, Chapter 8 applies and the PSC is responsible for self-assessment. Verify currency — the April 2021 reform shifted responsibility to the client for medium/large private-sector businesses.
+>
+> Cite the controlling primary sources. Note the effective date and whether any test is subject to recent case law or legislative change. Verify currency. If you cannot verify, flag it.
+
+> **No silent supplement.** If a research query returns few or no results, report what was found and stop. Say: "The search returned [N] results from [tool]. Options: (1) broaden the search, (2) try a different tool, (3) search the web — results tagged `[web search — verify]`, (4) flag as unverified and stop. Which would you like?"
+>
+> **Source attribution.** Tag every citation: `[uk-legal MCP]` for legislation or case law from the uk-legal MCP; `[BAILII]` for BAILII case law; `[legislation.gov.uk]` for statutory provisions; `[govuk MCP]` for HMRC/GOV.UK guidance; `[web search — verify]` for web searches; `[model knowledge — verify]` for training-data citations. Never strip the tags.
 
 ### Step 3 — Apply the researched tests to the facts
 
-For each test identified in Step 2, apply it to the intake facts. Score each
-factor or prong explicitly — do not summarize. The attorney needs to see which
-factors are clean and which are problems.
-
-Use a structure like the one below, but populate the *factors* from the
-researched test, not from this file:
+For each test, apply it to the intake facts and score each factor explicitly. Use a structure like:
 
 ```
 Test: [name of test, per research]
-Purpose: [what this test governs — federal tax / state wage-hour / UI / etc.]
-Source: [pinpoint cite to statute/regulation/case]
+Purpose: [employment rights / income tax & NICs / IR35]
+Source: [pinpoint cite]
 Currency: [verified as of date]
 
-| Factor / prong | Intake facts | Signal / pass-fail |
+| Factor | Intake facts | Signal |
 |---|---|---|
-| [Factor 1 from researched test] | [from intake] | [direction or pass/fail] |
-| [Factor 2] | [from intake] | [direction or pass/fail] |
-| ...                            |                |                   |
+| [Factor from researched test] | [from intake] | [direction] |
+...
 
-Structure of the test:
-[How the test weighs factors — e.g., a multi-factor balancing test, or a
-conjunctive test where each prong must be satisfied, or a hybrid. State this
-from research, not from memory.]
+How this test weighs factors:
+[From research — e.g., conjunctive (all three Ready Mixed elements must be met),
+multi-factor balancing, or dominant-purpose test]
 
-Result under this test:
-[Employee-leaning / IC-leaning / Fails prong X / Uncertain — contested prong]
+Result:
+[Employee / Worker (limb (b)) / Self-employed — or: Unclear — contested factor X]
 ```
 
-Repeat for each applicable test.
+Repeat for each applicable test and purpose. Where tests give different answers for different purposes, present each on its own track.
 
-**Notes on contested prongs.** Some prongs of some tests are heavily contested
-in case law and fact-sensitive. Identify contested prongs explicitly — do not
-paper over them. The fact that a test is stated does not mean its application
-to these facts is settled; flag prongs that require attorney judgment or that
-have generated recent litigation in the jurisdiction.
+**Notes on contested factors.** Mutuality of obligation and the degree of control required for employee (as distinct from worker) status are the most commonly contested elements in UK case law. The distinction between a contractual right to substitute and a genuine, exercised right to substitute is also frequently litigated. Identify contested factors explicitly.
 
 ### Step 4 — Classify and flag gaps
 
 **The classification call**
 
-Based on the test results, state the most accurate classification for this
-proposed arrangement:
+Based on the test results, state the most defensible classification:
 
-- **Employee (W-2):** Facts support employment under one or more applicable
-  tests for the relevant purpose(s).
-- **Independent Contractor (1099):** Facts support IC status under all
-  applicable tests for the relevant purpose(s).
-- **Temp via staffing agency:** Worker will be on the agency's payroll;
-  company is a client — co-employment risk exists if company exercises
-  day-to-day control. Research the applicable joint-employer standard if
-  relevant.
-- **Vendor/SOW:** Company-to-company engagement; worker is employed by the
-  vendor entity — cleanest structure if facts support it.
-- **Unclear / close call:** Facts cut both ways under one or more tests —
-  state which test is the problem and why.
+- **Employee**: facts support employee status under *Ready Mixed Concrete* / *Autoclenz*; entitled to full employment rights; PAYE applies.
+- **Worker (limb (b))**: facts support worker but not employee status; entitled to NMW, WTR, and holiday rights; PAYE likely applies for income tax/NICs.
+- **Genuinely self-employed**: facts support self-employed status under all applicable tests; no employment rights; self-assessment for income tax/NICs (absent IR35).
+- **IR35 deemed employment (PSC engagement)**: the hypothetical direct contract test suggests deemed employment; client must issue SDN and operate PAYE on fees paid to the PSC.
+- **Unclear / close call**: facts cut both ways — state which test is the problem and why.
 
-If tests give different answers for different purposes (e.g., defensible as
-IC for federal tax but fails a state wage/hour test), say so explicitly and
-name the controlling purpose and jurisdiction.
+If the tests give different answers for different purposes, say so explicitly and name the controlling purpose and jurisdiction.
 
 **The gap analysis**
 
-This is the most important output. Compare the intended structure against what
-the facts actually support:
+This is the most important output:
 
 ```
-Intended structure: [what they said they want]
-What the facts suggest: [what the researched tests say this actually is]
+Intended structure: [what they want]
+What the facts suggest: [what the tests say]
 
-Gaps — where the arrangement doesn't match the intended structure:
-🔴 [Factor]: [What they described] conflicts with [intended classification]
-   because [specific researched test language + cite]. This is a significant
-   misclassification risk if the engagement proceeds as described.
-🟡 [Factor]: [What they described] is a weaker point under [test]. Not
-   disqualifying alone, but combined with other factors increases risk.
-✅ [Factor]: Supports [intended classification]. No issue.
+Gaps — where the arrangement doesn't match:
+🔴 [Factor]: [what they described] conflicts with [intended classification]
+   because [researched test language + cite]. Significant misclassification
+   risk if the engagement proceeds as described.
+🟡 [Factor]: weaker point under [test]. Not disqualifying alone but increases
+   risk in combination.
+✅ [Factor]: supports [intended classification]. No issue.
 ```
 
 **Escalation trigger**
 
-Escalate per `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` if any of the following, or any team-specific
-triggers recorded in that config:
-- The jurisdiction uses a strict test and the proposed work is core to the
-  company's business — do not proceed without counsel review.
-- Prior misclassification settlement or audit noted in the config — heightened
-  scrutiny applies.
-- Worker will supervise employees or have significant budget authority.
+Escalate per `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` if any of the following:
+- Work is core to the company's business and control/integration factors point toward employment or worker status.
+- Prior HMRC dispute or ET claim noted in config — heightened scrutiny applies.
+- Worker will supervise employees or make business decisions on behalf of the client.
 - Engagement expected to exceed 12 months with no clear project endpoint.
-- Any contested prong where the outcome changes the classification.
+- PSC engagement and the client is a public-sector body or medium/large private-sector business — IR35 SDN required before the engagement starts.
+- Any contested factor where the outcome changes the classification.
 
 ### Step 5 — Output
 
-> **Research-connector pre-flight.** Before emitting the analysis, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 2 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; the highest-fabrication pinpoints in classification analyses are ABC-test codifications, state carve-out subsections (e.g., CA Lab. Code §§ 2775/2776/2783), element counts in B2B exemptions, and purpose-specific test selection — spot-check those first`. Per-citation `[model knowledge — verify]` tags remain inline. Do not emit a standalone banner above the output.
+> **Research-connector pre-flight.** Before emitting the analysis, check whether a legal research connector is reachable — the uk-legal MCP or BAILII. If no connector returns results in Step 2, record it in the **Sources:** line: e.g., `not connected — cites from training knowledge; the highest-fabrication topics in UK status analyses are the current IR35 off-payroll rules (reformed April 2021), the *Autoclenz*/*Uber* case holdings, and HMRC ESM section references — spot-check those first`.
 
-> **Jurisdiction assumption.** This analysis applies the tests operative in the jurisdiction(s) identified in intake. Classification rules vary materially by state and country, and the test that governs for one purpose (e.g., federal payroll tax) often differs from the test that governs another (e.g., state wage/hour). If the work will be performed in a jurisdiction not analyzed here, or if a new purpose is added later, this analysis may not apply as written.
+> **Jurisdiction assumption.** Employment status law under ERA 1996 and NMW Act 1998 applies across Great Britain. The IR35 off-payroll working rules under ITEPA 2003 apply UK-wide including Northern Ireland. Northern Ireland has its own Employment Rights (Northern Ireland) Order 1996 for employment rights purposes — flag NI engagements explicitly.
 
 ```markdown
 [WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
 
 ## Worker Classification Analysis
 **Proposed arrangement:** [what they described]
-**Jurisdiction:** [state/country]
-**Purpose(s):** [federal tax / state wage-hour / UI / WC / benefits]
+**Jurisdiction:** [E&W / Scotland / NI]
+**Purpose(s):** [employment rights / income tax & NICs / IR35]
 **Tests applied:** [list, each with pinpoint cite and currency date]
 
 ---
 
 ### Bottom line
 
-[Can you proceed / Need to fix X first / Stop — one-sentence why]
+[Can you proceed / Need to fix X first / Stop — one sentence]
 
 ---
 
 ### Classification
 
-**Closest classification:** [Employee / IC / Temp via agency / Vendor-SOW / Unclear]
+**Closest classification:** [Employee / Worker (limb (b)) / Self-employed / IR35 deemed employment / Unclear]
 
-[One paragraph summary of why — test results in plain language, tied to the
-cited sources.]
+[One paragraph — test results in plain language, tied to cited sources.]
 
 ---
 
@@ -324,16 +283,15 @@ cited sources.]
 #### [Test name — per research]
 Purpose: [...] | Source: [...] | Currency: [...]
 [Scored table from Step 3]
-**Result:** [Employee-leaning / IC-leaning / Fails prong X / Mixed]
+**Result:** [Employee / Worker / Self-employed / Unclear]
 
-#### [Additional researched tests — repeat the block]
+#### [Additional tests — repeat]
 
 ---
 
 ### Gap analysis
 
-[Flags as structured in Step 4 — 🔴 significant risks, 🟡 weaker points,
-✅ clean factors]
+[🔴 / 🟡 / ✅ flags from Step 4]
 
 ---
 
@@ -345,55 +303,43 @@ Purpose: [...] | Source: [...] | Currency: [...]
 
 ### Next steps
 
-[If IC viable: "Proceed — ensure the written agreement reflects the terms that
-support IC status under the researched test."]
-[If gaps exist: "Address the following before using IC structure: [list]"]
-[If agency/vendor is cleaner: "Consider restructuring as [agency/SOW] — here's
-why it's cleaner for this fact pattern."]
-[If escalation needed: "Do not proceed until counsel reviews the [specific
-issue]."]
-[If employee confirmed: "Classification confirmed as W-2 employee — run
-`/employment-legal:hiring-review` to review the offer letter, restrictive
-covenants, and jurisdiction-specific requirements."]
-[If IC confirmed: "Classification confirmed as independent contractor — no
-offer letter review needed. Ensure the written agreement reflects IC-supporting
-terms before the engagement starts."]
-[If agency/vendor: "Engagement should be structured through [agency/vendor
-entity] — coordinate with them on worker agreement. No `/hiring-review` needed."]
+[If self-employed viable: "Proceed — ensure the written agreement reflects the terms supporting self-employed status, including a genuine substitution right and no mutuality of obligation."]
+[If worker status is right: "Structure as a worker engagement — ensure NMW, WTR, and holiday rights are built into the contract."]
+[If employee: "Classification is employee — run `/employment-legal:hiring-review` for the offer letter and ERA s.1 particulars."]
+[If IR35: "IR35 applies — issue a Status Determination Notice (SDN) and operate PAYE on fees before the engagement starts. Take specialist tax advice."]
+[If gaps: "Address the following before using [intended structure]: [list]"]
+[If escalation: "Do not proceed until a solicitor reviews [specific issue]."]
 ```
 
 ## Consequential-action gate (classify a worker)
 
-**Before producing a "Proceed as IC / employee / agency / vendor" final recommendation:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
+**Before producing a final classification recommendation:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
 
-> Classifying a worker has legal consequences — misclassification exposes the company to back wages, taxes, benefits, penalties, and private-action risk, and in several states is strict-liability. Have you reviewed this classification call with an attorney? If yes, proceed. If no, here's a brief to bring to them:
+> Classifying a worker has legal consequences — misclassification as self-employed when the facts support worker or employee status exposes the business to NMW/holiday back-pay, NICs arrears, HMRC penalties, and Employment Tribunal claims. IR35 misclassification triggers PAYE liability on the client. Have you reviewed this classification call with a solicitor or employment/tax adviser? If yes, proceed. If no, here's a brief to bring to them:
 >
-> - The arrangement (work, control, economics, structure) as described
+> - The arrangement (work, control, substitution, economics, structure) as described
 > - Jurisdiction and which tests were applied
 > - Test-by-test results with cites and currency
-> - Gap analysis (🔴 / 🟡 / ✅) with the weak prongs called out
+> - Gap analysis (🔴 / 🟡 / ✅) with contested factors called out
 > - Open questions and what's unresolved
-> - What could go wrong (the misclassification theory this arrangement most likely fails on; prior-audit/settlement overlay if any)
-> - What to ask the attorney (is IC viable here; would restructuring through an agency or vendor remove the risk; what contract terms do we need to support the classification)
+> - What could go wrong (NMW/holiday back-pay; NICs/PAYE arrears; IR35 liability; ET claims)
+> - What to ask the solicitor (is self-employed status defensible; would restructuring remove the risk; is IR35 in scope; what contract terms are needed)
 >
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
+> If you need to find a solicitor specialising in employment or tax law: the SRA's Find a Solicitor tool (sra.org.uk/consumers/find-a-solicitor) is the official public register. For IR35 specifically, consider a specialist employment tax adviser.
 
-Do not produce a final "IC viable" / "use this classification" output past this gate without an explicit yes. A marked-DRAFT analysis for attorney review is fine.
+Do not produce a final classification recommendation past this gate without an explicit yes. A marked-DRAFT analysis for solicitor review is fine.
 
 ---
 
 ## What this skill does NOT do
 
-- Analyze an existing relationship retroactively — this is prospective only.
-- Draft the contractor agreement or SOW.
+- Analyse an existing relationship retroactively — prospective only.
+- Draft the contractor agreement or consultancy terms.
 - Advise on remediation if misclassification has already occurred.
-- State the law for any jurisdiction on its own — every test, factor, and
-  carve-out must come from verified current research.
-- Substitute for outside counsel on close calls — strict-test jurisdictions,
-  contested prongs, and prior-audit situations should always get a human
-  review before the engagement starts.
+- Issue a Status Determination Notice (SDN) — that is the client's legal obligation under ITEPA 2003 Chapter 10; this skill provides the analysis to support that determination.
+- State the law on its own — every test, factor, and case must come from verified current research.
+- Substitute for a solicitor or tax adviser on close calls.
 
 ## Close with the next-steps decision tree
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
-
+End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customise the options to what this skill just produced. The tree is the output; the lawyer or HR professional picks.

@@ -23,7 +23,7 @@ checklist, and creates the persistent investigation log.
 
 ```
 /employment-legal:investigation-open
-Harassment complaint filed against a manager in the Austin office.
+Harassment complaint filed against a manager in the London office.
 ```
 
 ```

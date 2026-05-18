@@ -18,7 +18,7 @@ or updates an existing draft when new data has been added.
 2. If drafting for the first time, warn if high-priority sources are still
    open on the checklist.
 3. If updating, show what changed before rewriting.
-4. All output is marked PRIVILEGED AND CONFIDENTIAL — ATTORNEY WORK PRODUCT.
+4. All output is marked PRIVILEGED AND CONFIDENTIAL — LEGAL PROFESSIONAL PRIVILEGE.
 
 ## Examples
 

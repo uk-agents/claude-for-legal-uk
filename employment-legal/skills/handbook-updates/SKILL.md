@@ -2,7 +2,7 @@
 name: handbook-updates
 description: >
   Diff a proposed handbook change against the current version, flag ripple
-  effects and state supplement impacts. Use when user says "update the
+  effects and jurisdiction supplement impacts. Use when user says "update the
   handbook", "add this to the handbook", "handbook change", or has a policy
   ready for insertion.
 ---
@@ -17,11 +17,11 @@ description: >
 
 ## Purpose
 
-Handbook changes have ripple effects. Change the PTO policy and you've affected the final pay calculation, the leave policy cross-reference, and three state supplements. This skill finds the ripples before they become inconsistencies.
+Handbook changes have ripple effects. Change the holiday policy and you've affected the final pay calculation, the leave policy cross-reference, and any Northern Ireland supplement. This skill finds the ripples before they become inconsistencies.
 
 ## Load context
 
-`~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → handbook location, state supplements list, update cadence.
+`~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → handbook location, jurisdiction supplements list, update cadence.
 
 ## Workflow
 
@@ -44,15 +44,15 @@ Read the current handbook section. Show the diff:
 
 Search the handbook for references to the changed section:
 
-- Other policies that cite this one ("see the PTO policy for accrual rates")
+- Other policies that cite this one ("see the holiday policy for accrual rates")
 - Defined terms that this section uses or defines
-- State supplements that modify this section
+- Jurisdiction supplements that modify this section
 
 Each cross-reference: does it still make sense after the change? Flag any that break.
 
-### Step 4: State supplement impact
+### Step 4: Jurisdiction supplement impact
 
-For each state supplement in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`:
+For each jurisdiction supplement in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`:
 
 - Does this supplement modify the section being changed?
 - Does the change make the supplement obsolete, wrong, or incomplete?
@@ -62,7 +62,7 @@ For each state supplement in `~/.claude/plugins/config/claude-for-legal/employme
 
 Is the change reducing something the old version promised?
 
-If yes: that's a risk. Some states treat handbook policies as contractual. Reducing a benefit may need more than just updating the document — advance notice, consideration, or in some cases it can't be done retroactively.
+If yes: that's a risk. Employment tribunal judges read handbook policies as creating legitimate expectations enforceable as contractual terms or implied duties of trust and confidence. Reducing a benefit unilaterally may constitute a breach of contract or a constructive dismissal risk. Reducing a benefit may need more than just updating the document — advance notice, consultation, consideration (e.g., a corresponding enhancement elsewhere), and in some cases it cannot be done retroactively without individual consent.
 
 Flag this. Don't block it — but flag it.
 
@@ -81,11 +81,12 @@ Flag this. Don't block it — but flag it.
 |---|---|---|---|
 | [name] | [how] | ✅/⚠️ | [what] |
 
-### State supplement impact
+### Jurisdiction supplement impact
 
-| State | Current supplement | After change | Action |
+| Jurisdiction | Current supplement | After change | Action |
 |---|---|---|---|
-| [state] | [what it says] | [still valid / obsolete / needs update] | [none / update / new supplement needed] |
+| Northern Ireland | [what it says] | [still valid / obsolete / needs update] | [none / update / new supplement needed] |
+| [Country] | [what it says] | [still valid / obsolete / needs update] | [none / update / new supplement needed] |
 
 ### Promise check
 
@@ -94,7 +95,7 @@ Flag this. Don't block it — but flag it.
 ### Ready to publish
 
 - [ ] Cross-references updated
-- [ ] State supplements updated
+- [ ] Jurisdiction supplements updated
 - [ ] [If benefit reduction: notice/consideration addressed]
 - [ ] Version number and date updated
 - [ ] Acknowledgment process (if required)
