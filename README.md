@@ -1,5 +1,8 @@
 # Claude for Legal
 
+> [!IMPORTANT]
+> **Active development has moved to [uk-agents/uk-legal-plugins](https://github.com/uk-agents/uk-legal-plugins).** That's where the 11 UK-jurisdiction plugins are maintained, released, and installable as a marketplace. This repo remains as the upstream-tracking fork of Anthropic's [`claude-for-legal`](https://github.com/anthropics/claude-for-legal) and the original home of the UK contribution (PR #46).
+
 Reference agents, skills, and data connectors for the legal workflows we see most — in-house commercial, privacy, product, corporate, employment, litigation, regulatory, AI governance, IP, and the learning side of the practice (law school clinics and students).
 
 > **New here?** Start with [QUICKSTART.md](QUICKSTART.md) — install in 60 seconds. This README is the full reference.
